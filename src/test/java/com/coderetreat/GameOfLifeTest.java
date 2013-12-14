@@ -39,10 +39,18 @@ public class GameOfLifeTest {
         return !(neighbors > 3 || neighbors < 2);
     }
 
-    public void bla() {
+    @Test
+    public void shouldReturnTrueWhenIsAlive() {
         Cell cell = new Cell(true);
 
         assertThat(cell.isAlive()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnFalseWhenIsAlive() {
+        Cell cell = new Cell(false);
+
+        assertThat(cell.isAlive()).isFalse();
     }
 
      @Test
