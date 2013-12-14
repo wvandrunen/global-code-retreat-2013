@@ -39,7 +39,13 @@ public class GameOfLifeTest {
         return !(neighbors > 3 || neighbors < 2);
     }
 
-    @Test
+    public void bla() {
+        Cell cell = new Cell(true);
+
+        assertThat(cell.isAlive()).isTrue();
+    }
+
+     @Test
     public void shouldReturnZeroAliveNeighborsWhenGettingFromWorld() {
         World world = new World();
 
@@ -49,6 +55,18 @@ public class GameOfLifeTest {
     private class World {
         public int getAliveNeighbors(int x, int y) {
             return 0;
+        }
+    }
+
+    private class Cell {
+        private boolean alive;
+
+        public Cell(boolean alive) {
+            this.alive = alive;
+        }
+
+        public boolean isAlive() {
+            return alive;
         }
     }
 }
