@@ -12,6 +12,16 @@ public class GameOfLifeTest {
     }
 
     @Test
+    public void shouldSurviveWithTwoNeighbors() {
+        assertThat(remainsAliveWith(2)).isTrue();
+    }
+
+    @Test
+    public void shouldSurviveWithThreeNeighbors() {
+        assertThat(remainsAliveWith(3)).isTrue();
+    }
+
+    @Test
     public void shouldDieWithMoreThenThreeNeighbors() {
         assertThat(remainsAliveWith(5)).isFalse();
 
