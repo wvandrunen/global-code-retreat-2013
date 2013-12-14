@@ -53,6 +53,15 @@ public class GameOfLifeTest {
         assertThat(cell.isAlive()).isFalse();
     }
 
+    @Test
+    public void bla() {
+        Cell cell = new Cell(true);
+
+        Cell nextGen = cell.constructNextGen(3);
+
+        assertThat(nextGen.isAlive()).isTrue();
+    }
+
      @Test
     public void shouldReturnZeroAliveNeighborsWhenGettingFromWorld() {
         World world = new World();
@@ -75,6 +84,10 @@ public class GameOfLifeTest {
 
         public boolean isAlive() {
             return alive;
+        }
+
+        public Cell constructNextGen(int i) {
+            return new Cell(true);
         }
     }
 }
