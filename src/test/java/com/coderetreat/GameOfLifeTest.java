@@ -24,7 +24,15 @@ public class GameOfLifeTest {
     @Test
     public void shouldDieWithMoreThenThreeNeighbors() {
         assertThat(remainsAliveWith(5)).isFalse();
+    }
 
+    @Test
+    public void shouldReviveDeadCellWithWith3Neighbors() {
+        assertThat(becomesAlive(3)).isTrue();
+    }
+
+    private boolean becomesAlive(int i) {
+        return (i == 3);
     }
 
     private boolean remainsAliveWith(int neighbors) {
