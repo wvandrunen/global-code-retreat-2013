@@ -8,28 +8,16 @@ public class GameOfLifeTest {
 
     @Test
     public void shouldDieWithLessThenTwoNeighbors() {
-        boolean alive = true;
-
-        int neighbors = 1;
-
-        if(neighbors < 2) {
-            alive = false;
-        }
-
-        assertThat(alive).isFalse();
+        assertThat(remainsAliveWith(1)).isFalse();
     }
 
     @Test
     public void shouldDieWithMoreThenThreeNeighbors() {
-        boolean alive = true;
+        assertThat(remainsAliveWith(5)).isFalse();
 
-        int neighbors = 5;
+    }
 
-        if(neighbors > 3) {
-            alive = false;
-        }
-
-        assertThat(alive).isFalse();
-
+    private boolean remainsAliveWith(int neighbors) {
+        return !(neighbors > 3 || neighbors < 2);
     }
 }
