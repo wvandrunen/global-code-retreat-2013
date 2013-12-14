@@ -13,22 +13,25 @@ public class GameOfLifeTest {
 
         assertThat(nextGen.isAlive()).isFalse();
     }
-/*
     @Test
     public void shouldSurviveWithTwoNeighbors() {
-        assertThat(remainsAliveWith(2)).isTrue();
-    }
+        Cell cell = new Cell(true);
 
-    @Test
-    public void shouldSurviveWithThreeNeighbors() {
-        assertThat(remainsAliveWith(3)).isTrue();
+        Cell nextGen = cell.constructNextGen(2);
+        assertThat(nextGen.isAlive()).isTrue();
     }
+    /*
 
-    @Test
-    public void shouldDieWithMoreThenThreeNeighbors() {
-        assertThat(remainsAliveWith(5)).isFalse();
-    }
-*/
+        @Test
+        public void shouldSurviveWithThreeNeighbors() {
+            assertThat(remainsAliveWith(3)).isTrue();
+        }
+
+        @Test
+        public void shouldDieWithMoreThenThreeNeighbors() {
+            assertThat(remainsAliveWith(5)).isFalse();
+        }
+    */
     @Test
     public void shouldReviveDeadCellWithWith3Neighbors() {
         assertThat(becomesAlive(3)).isTrue();
