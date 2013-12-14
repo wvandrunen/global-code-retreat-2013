@@ -16,6 +16,20 @@ public class GameOfLifeTest {
             alive = false;
         }
 
-        assertThat(alive).isEqualTo(false);
+        assertThat(alive).isFalse();
+    }
+
+    @Test
+    public void shouldDieWithMoreThenThreeNeighbors() {
+        boolean alive = true;
+
+        int neighbors = 5;
+
+        if(neighbors > 3) {
+            alive = false;
+        }
+
+        assertThat(alive).isFalse();
+
     }
 }
