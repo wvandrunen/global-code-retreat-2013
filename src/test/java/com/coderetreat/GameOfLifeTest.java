@@ -8,11 +8,16 @@ public class GameOfLifeTest {
 
     @Test
     public void shouldDieWithLessThenTwoNeighbors() {
-        Cell cell = new Cell(true);
-        Cell nextGen = cell.constructNextGen(1);
+        Cell nextGen = createNextGenCellBasedOnNeighbors(1);
 
         assertThat(nextGen.isAlive()).isFalse();
     }
+
+    private Cell createNextGenCellBasedOnNeighbors(int neighbors) {
+        Cell cell = new Cell(true);
+        return cell.constructNextGen(neighbors);
+    }
+
     @Test
     public void shouldSurviveWithTwoNeighbors() {
         Cell cell = new Cell(true);
