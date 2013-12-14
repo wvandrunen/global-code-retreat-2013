@@ -9,167 +9,155 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class GameOfLifeTest {
 
+
     @Test
-    public void shouldDieWithAmountOfNeigborsLowerThenTwo() {
-        assertThat(isAlive(1)).isFalse();
+    public void shouldDieWithAmountOfNeighboursLowerThenTwo() {
+        Cell cell = new Cell(0, 0, true);
+        Cell nextGen = cell.moveNextGen(1);
+
+
+        assertThat(nextGen.isDead()).isTrue();
     }
 
     @Test
     public void shouldSurviveGivenTwoNeighbours() {
-        assertThat(isAlive(2)).isTrue();
+        Cell cell = new Cell(0, 0, true);
+        Cell nextGen = cell.moveNextGen(2);
+
+        assertThat(nextGen.isAlive()).isTrue();
     }
 
     @Test
     public void shouldSurviveGivenThreeNeighbours() {
-        assertThat(isAlive(3)).isTrue();
+        Cell cell = new Cell(0, 0, true);
+        Cell nextGen = cell.moveNextGen(3);
+
+
+        assertThat(nextGen.isAlive()).isTrue();
     }
 
     @Test
     public void shouldDieGivenOvercrowding() {
-        assertThat(isAlive(4)).isFalse();
+        Cell cell = new Cell(0, 0, true);
+        Cell nextGen = cell.moveNextGen(4);
+
+        assertThat(nextGen.isDead()).isTrue();
     }
 
     @Test
     public void shouldReproduceGivenDeadCellWithThreeNeighbours() {
-        assertThat(isDead(3)).isTrue();
-    }
+        Cell cell = new Cell(0, 0, false);
+        Cell nextGen = cell.moveNextGen(3);
 
-    @Test
-    public void shouldNotReproduceGivenDeadCellWithLessThanThreeNeighbours() {
-        assertThat(isDead(2)).isFalse();
-    }
 
-    @Test
-    public void shouldNotReproduceGivenDeadCellWithGreaterThanThreeNeighbours() {
-        assertThat(isDead(4)).isFalse();
+        assertThat(nextGen.isAlive()).isTrue();
     }
 
     @Test
     public void shouldReturnNumberOfAliveNeighboursEqualToZeroGivenAllCellsDead() {
-        assertThat(getAliveNeighbours(new ArrayList<Point>(), 0, 0)).isEqualTo(0);
+        assertThat(getAliveNeighbours(new ArrayList<Cell>(), 0, 0)).isEqualTo(0);
     }
 
     @Test
     public void shouldReturnNumberOfAliveNeighboursEqualToOneGivenRightNeighbourAlive() {
-        List<Point> livingCells = new ArrayList<Point>();
-        livingCells.add(new Point(1, 0));
+        List<Cell> livingCells = new ArrayList<Cell>();
+        livingCells.add(new Cell(1, 0));
         assertThat(getAliveNeighbours(livingCells, 0, 0)).isEqualTo(1);
     }
 
-
     @Test
     public void shouldReturnNumberOfAliveNeighboursEqualToTwoGivenUpAndRightCellsAlive() {
-        List<Point> livingCells = new ArrayList<Point>();
-        livingCells.add(new Point(1, 0));
-        livingCells.add(new Point(2, 1));
-        livingCells.add(new Point(100, 100));
+        List<Cell> livingCells = new ArrayList<Cell>();
+        livingCells.add(new Cell(1, 0));
+        livingCells.add(new Cell(2, 1));
+        livingCells.add(new Cell(100, 100));
         assertThat(getAliveNeighbours(livingCells, 1, 1)).isEqualTo(2);
     }
 
     @Test
     public void shouldReturnNumberOfAliveNeighboursEqualToEightGivenSurroundingCellsAlive() {
-        List<Point> livingCells = new ArrayList<Point>();
-        livingCells.add(new Point(0, 0)); livingCells.add(new Point(1, 0)); livingCells.add(new Point(2, 0));
-        livingCells.add(new Point(0, 1)); livingCells.add(new Point(1, 1)); livingCells.add(new Point(2, 1));
-        livingCells.add(new Point(0, 2)); livingCells.add(new Point(1, 2)); livingCells.add(new Point(2, 2));
-        livingCells.add(new Point(100, 100));
+        List<Cell> livingCells = new ArrayList<Cell>();
+        livingCells.add(new Cell(0, 0)); livingCells.add(new Cell(1, 0)); livingCells.add(new Cell(2, 0));
+        livingCells.add(new Cell(0, 1)); livingCells.add(new Cell(1, 1)); livingCells.add(new Cell(2, 1));
+        livingCells.add(new Cell(0, 2)); livingCells.add(new Cell(1, 2)); livingCells.add(new Cell(2, 2));
+        livingCells.add(new Cell(100, 100));
         assertThat(getAliveNeighbours(livingCells, 1, 1)).isEqualTo(8);
     }
 
     @Test
     public void shouldReturnNumberOfAliveNeighboursEqualToThreeGivenUpAndRightCellsAlive() {
-        List<Point> livingCells = new ArrayList<Point>();
-        livingCells.add(new Point(1, 0));
-        livingCells.add(new Point(2, 1));
-        livingCells.add(new Point(2, 2));
-        livingCells.add(new Point(100, 100));
-        assertThat(getAliveNeighbours(livingCells, 1, 1)).isEqualTo(3);
-    }
-
-    @Test
-    public void shouldCellBeAliveWhenCreatingNewCell() {
-        Cell cell = new Cell();
-
-        assertThat(cell.isAlive()).isTrue();
-    }
-
-    @Test
-    public void shouldReturnTrueIfCellIsAlive() {
-        List<Point> livingCells = new ArrayList<Point>();
-        livingCells.add(new Point(0, 0));
-        assertThat(isAlive(livingCells, 0, 0)).isTrue();
-    }
-
-    @Test
-    public void shouldReturnFalseIfCellIsDeadWithEmptyList() {
-        List<Point> livingCells = new ArrayList<Point>();
-        assertThat(isAlive(livingCells, 0, 0)).isFalse();
-    }
-
-    @Test
-    public void shouldReturnFalseIfCellIsDeadWithNonEmptyList() {
-        List<Point> livingCells = new ArrayList<Point>();
-        livingCells.add(new Point(1, 0));
-        assertThat(isAlive(livingCells, 0, 0)).isFalse();
+        List<Cell> cells = new ArrayList<Cell>();
+        cells.add(new Cell(1, 0));
+        cells.add(new Cell(2, 1));
+        cells.add(new Cell(2, 2));
+        cells.add(new Cell(100, 100));
+        assertThat(getAliveNeighbours(cells, 1, 1)).isEqualTo(3);
     }
 
     @Test
     public void shouldCalculateTheNextGeneration() {
-        List<Point> generation1 = new ArrayList<Point>();
-        List<Point> generation2 = nextGeneration(generation1);
+        List<Cell> generation1 = new ArrayList<Cell>();
+        List<Cell> generation2 = nextGeneration(generation1);
         assertThat(generation2.size()).isEqualTo(0);
     }
 
     @Test
-    public void shouldCalculateTheNextGenerationWhenGivenNonEmptyGeneration() {
-        List<Point> generation1 = new ArrayList<Point>();
-        generation1.add(new Point(0, 1));
-        generation1.add(new Point(2, 1));
-        generation1.add(new Point(2, 2));
-        List<Point> generation2 = nextGeneration(generation1);
-        assertThat(generation2.size()).isEqualTo(1);
-    }
-
-
-    @Test
     public void nextGenerationShouldContainSurvivingCells() {
-        List<Point> generation1 = new ArrayList<Point>();
-        generation1.add(new Point(0, 1));
-        generation1.add(new Point(1, 1));
-        generation1.add(new Point(2, 1));
-        generation1.add(new Point(2, 2));
-        List<Point> generation2 = nextGeneration(generation1);
-        assertThat(generation2.size()).isEqualTo(1);
+        List<Cell> generation1 = new ArrayList<Cell>();
+        generation1.add(new Cell(0, 0, false)); generation1.add(new Cell(1, 0, false)); generation1.add(new Cell(2, 0, false));
+        generation1.add(new Cell(0, 1, true)); generation1.add(new Cell(1, 1, false)); generation1.add(new Cell(2, 1, false));
+        generation1.add(new Cell(0, 2, false)); generation1.add(new Cell(1, 2, true)); generation1.add(new Cell(2, 2, true));
+
+        List<Cell> generation2 = nextGeneration(generation1);
+
+        Cell cell = getCell(generation2, 1, 1);
+        assertThat(cell.isAlive()).isTrue();
     }
 
-    private List<Point> nextGeneration(List<Point> generation) {
-        if (generation.size() == 0)
-            return Collections.emptyList();
+    public Cell getCell(List<Cell> cells, int x, int y) {
+        for(Cell cell : cells) {
+            if(cell.isAt(x, y)) {
+                return cell;
+            }
+        }
 
-        List<Point> result = new ArrayList<Point>();
-        result.add(null);
-        return result;
+        return null;
     }
 
-    private boolean isAlive(List<Point> livingCells, int x, int y) {
-        for(Point livingCell : livingCells) {
-            if(livingCell.equals(new Point(x, y))) {
-                return true;
+    private List<Cell> nextGeneration(List<Cell> currentGeneration) {
+        List<Cell> nextGeneration = new ArrayList<Cell>();
+
+        for(Cell cell : currentGeneration) {
+            int aliveNeighbours = getAliveNeighbours(currentGeneration, cell.getX(), cell.getY());
+
+            nextGeneration.add(cell.moveNextGen(aliveNeighbours));
+        }
+        
+        return nextGeneration;
+    }
+
+    private boolean isAlive(List<Cell> cells, int x, int y) {
+        for(Cell cell : cells) {
+            if(cell.equals(new Cell(x, y))) {
+                return cell.isAlive();
             }
         }
 
         return false;
     }
 
-    private int getAliveNeighbours(List<Point> livingCells, int x, int y) {
+    private int getAliveNeighbours(List<Cell> cells, int x, int y) {
         int amountAlive = 0;
 
-        List<Point> possiblePoints = calculatePossiblePoints(x, y);
+        List<Cell> possiblePoints = calculatePossiblePoints(x, y);
 
-        for(Point livingCell : livingCells) {
-            for(Point possiblePoint : possiblePoints) {
-                if(possiblePoint.equals(livingCell)) {
-                    amountAlive++;
+        for(Cell cell : cells) {
+            for(Cell possiblePoint : possiblePoints) {
+
+                if(possiblePoint.isAt(cell)) {
+                    if(cell.isAlive()) {
+                        amountAlive++;
+                    }
                 }
             }
         }
@@ -177,68 +165,104 @@ public class GameOfLifeTest {
         return amountAlive;
     }
 
-    private List<Point> calculatePossiblePoints(int x, int y) {
-        List<Point> possiblePoints = new ArrayList<Point>();
+    private List<Cell> calculatePossiblePoints(int x, int y) {
+        List<Cell> possiblePoints = new ArrayList<Cell>();
 
-        possiblePoints.add(new Point(x - 1, y));
-        possiblePoints.add(new Point(x + 1, y));
-        possiblePoints.add(new Point(x, y + 1));
-        possiblePoints.add(new Point(x, y - 1));
-        possiblePoints.add(new Point(x - 1, y -1));
-        possiblePoints.add(new Point(x + 1, y + 1));
-        possiblePoints.add(new Point(x - 1, y + 1));
-        possiblePoints.add(new Point(x + 1, y - 1));
+        possiblePoints.add(new Cell(x - 1, y));
+        possiblePoints.add(new Cell(x + 1, y));
+        possiblePoints.add(new Cell(x, y + 1));
+        possiblePoints.add(new Cell(x, y - 1));
+        possiblePoints.add(new Cell(x - 1, y -1));
+        possiblePoints.add(new Cell(x + 1, y + 1));
+        possiblePoints.add(new Cell(x - 1, y + 1));
+        possiblePoints.add(new Cell(x + 1, y - 1));
 
         return possiblePoints;
     }
 
-    private boolean isDead(int neighbours) {
-        return neighbours == 3;
+    @Test
+    public void shouldReturnZombieCellWhenDiedCellIsRevived() {
+        Cell cell = new Cell(0,0, true);
+
+        cell.die();
+        cell.live();
+
+        assertThat(cell.isZombie()).isTrue();
     }
 
-    public boolean isAlive(int neighbours) {
-        return neighbours >= 2 && neighbours < 4;
-    }
 
-    class Point {
+    class Cell {
+
         private final int x;
         private final int y;
+        private boolean alive;
+        private boolean diedAlready = false;
 
-        public Point(int x, int y) {
+        public Cell(int x, int y) {
+            this(x, y, true);
+        }
 
+        public Cell(Cell cell) {
+            this.x = cell.x;
+            this.y = cell.y;
+            this.alive = cell.alive;
+            this.diedAlready = cell.diedAlready;
+        }
+
+        public Cell(int x, int y, boolean alive) {
             this.x = x;
             this.y = y;
+            this.alive = alive;
         }
 
         public int getX() {
             return x;
         }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Point point = (Point) o;
-
-            if (x != point.x) return false;
-            if (y != point.y) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = x;
-            result = 31 * result + y;
-            return result;
-        }
-    }
-
-    private class Cell {
-
         public boolean isAlive() {
-            return true;
+            return alive;
+        }
+
+        public boolean isDead () {
+            return !alive;
+        }
+
+        public void die() {
+            diedAlready = true;
+            alive = false;
+        }
+
+        public void live() {
+            alive = true;
+        }
+
+        public boolean isZombie() {
+            return diedAlready && alive;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public boolean isAt(int x, int y) {
+            return (this.x == x && this.y == y);
+        }
+
+        public Cell moveNextGen(int neighbours) {
+            Cell clonedCell = new Cell(this);
+
+            if(isAlive() && (neighbours < 2 || neighbours > 3)) {
+                clonedCell.die();
+            } else if(isDead() && neighbours == 3) {
+                clonedCell.live();
+            }
+
+            return clonedCell;
+        }
+
+        public boolean isAt(Cell otherCell) {
+            return isAt(otherCell.x, otherCell.y);
         }
     }
+
 }
