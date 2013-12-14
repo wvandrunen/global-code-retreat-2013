@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.fest.assertions.Assertions.assertThat;
 
 public class GameOfLifeTest {
-
+/*
     @Test
     public void shouldDieWithLessThenTwoNeighbors() {
         assertThat(remainsAliveWith(1)).isFalse();
@@ -34,11 +34,7 @@ public class GameOfLifeTest {
     private boolean becomesAlive(int i) {
         return (i == 3);
     }
-
-    private boolean remainsAliveWith(int neighbors) {
-        return !(neighbors > 3 || neighbors < 2);
-    }
-
+*/
     @Test
     public void shouldReturnTrueWhenIsAlive() {
         Cell cell = new Cell(true);
@@ -54,7 +50,7 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void bla() {
+    public void calculateNextgenWhenGivenThreeNeighbors() {
         Cell cell = new Cell(true);
 
         Cell nextGen = cell.constructNextGen(3);
@@ -86,8 +82,12 @@ public class GameOfLifeTest {
             return alive;
         }
 
-        public Cell constructNextGen(int i) {
-            return new Cell(true);
+        public Cell constructNextGen(int neighbors) {
+            return new Cell(remainsAliveWith(neighbors));
+        }
+
+        private boolean remainsAliveWith(int neighbors) {
+            return !(neighbors > 3 || neighbors < 2);
         }
     }
 }
