@@ -7,7 +7,15 @@ import static org.fest.assertions.Assertions.assertThat;
 public class GameOfLifeTest {
 
     @Test
-    public void trueShouldBeTrue() {
-        assertThat(true).isEqualTo(false);
+    public void shouldDieWithLessThenTwoNeighbors() {
+        boolean alive = true;
+
+        int neighbors = 1;
+
+        if(neighbors < 2) {
+            alive = false;
+        }
+
+        assertThat(alive).isEqualTo(false);
     }
 }
