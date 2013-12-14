@@ -38,4 +38,17 @@ public class GameOfLifeTest {
     private boolean remainsAliveWith(int neighbors) {
         return !(neighbors > 3 || neighbors < 2);
     }
+
+    @Test
+    public void shouldReturnZeroAliveNeighborsWhenGettingFromWorld() {
+        World world = new World();
+
+        assertThat(world.getAliveNeighbors(1,1)).isEqualTo(0);
+    }
+
+    private class World {
+        public int getAliveNeighbors(int x, int y) {
+            return 0;
+        }
+    }
 }
